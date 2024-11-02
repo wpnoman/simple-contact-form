@@ -2,7 +2,7 @@
 
 namespace simple_contact_form\Includes;
 
-class Simple_contact_form{
+class Simple_contact_admin{
     public static function simple_contact_form_cpt() {
         $labels = array(
             'name'                  => _x( 'Simples Contact Forms', 'Post Type General Name', 'textdomain' ),

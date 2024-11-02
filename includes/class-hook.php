@@ -1,7 +1,7 @@
 <?php 
 
 namespace simple_contact_form\Includes;
-use simple_contact_form\Includes\Simple_contact_form;
+use simple_contact_form\Includes\Simple_contact_admin;
 
 class Hook{
     public function __construct()
@@ -14,8 +14,9 @@ class Hook{
 
     public function scfn_cpt(){
 
-        $scfn_cpt = new Simple_contact_form();
-        add_action( 'init', [ 'simple_contact_form\Includes\Simple_contact_form', 'simple_contact_form_cpt'], 0 );
+        $scfn_cpt = new Simple_contact_admin();
+        
+        add_action( 'init', [ $scfn_cpt, 'simple_contact_form_cpt'], 0 );
 
         add_filter('manage_simple_contact_form_posts_columns', [ $scfn_cpt, 'scf_add_custom_column']);
 
