@@ -58,18 +58,28 @@ class Simple_contact_form{
     }
 
     function scf_add_custom_column($columns) {
-        // Add a new column
-        $columns['custom_field'] = 'Custom Field';
-        return $columns;
+        
+        // Create an array to hold the reordered columns
+        $new_columns = array();
+        
+        // Loop through existing columns and add them to the new array
+        foreach ($columns as $key => $value) {
+            // Add your custom column right before the "date" column
+            if ($key == 'date') {
+                $new_columns['scfn_shortcode'] = 'Shortcode';
+            }
+            $new_columns[$key] = $value;
+        }
+        
+        return $new_columns;
     }
 
     function scf_custom_column_content($column, $post_id) {
-        if ($column == 'custom_field') {
-            // Retrieve and display the custom field value or any other data
-            $custom_field_value = get_post_meta($post_id, 'custom_field_key', true);
-            echo esc_html($custom_field_value);
+        if ($column == 'scfn_shortcode') {
+            $string = '[simple-contact-form id="' . get_the_ID().'"]';
+            // echo $string;
+            echo "<input text='text' value=' $string ' class='regular-text'>";
         }
     }
-    // add_action('manage_simple_contact_form_posts_custom_column', 'scf_custom_column_content', 10, 2);
     
 }

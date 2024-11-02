@@ -1,7 +1,7 @@
 <?php 
 
 namespace simple_contact_form\Includes;
-// use simple_contact_form\Includes\Simple_contact_form;
+use simple_contact_form\Includes\Simple_contact_form;
 
 class Hook{
     public function __construct()
@@ -13,11 +13,13 @@ class Hook{
     }
 
     public function scfn_cpt(){
+
+        $scfn_cpt = new Simple_contact_form();
         add_action( 'init', [ 'simple_contact_form\Includes\Simple_contact_form', 'simple_contact_form_cpt'], 0 );
 
-        // add_filter('manage_simple_contact_form_posts_columns', [ 'simple_contact_form\Includes\Simple_contact_form', 'scf_add_custom_column']);
+        add_filter('manage_simple_contact_form_posts_columns', [ $scfn_cpt, 'scf_add_custom_column']);
 
-        // add_filter('manage_edit-simple_contact_form_sortable_columns', [ 'simple_contact_form\Includes\Simple_contact_form' ,'scf_custom_column_sortable'] );
+        add_action('manage_simple_contact_form_posts_custom_column', [ $scfn_cpt, 'scf_custom_column_content' ], 10, 2);
 
     }
     
