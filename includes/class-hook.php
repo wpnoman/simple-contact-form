@@ -2,6 +2,7 @@
 
 namespace simple_contact_form\Includes;
 use simple_contact_form\Includes\Simple_contact_admin;
+use simple_contact_form\Includes\Simple_contact_shortcode;
 
 class Hook{
     public function __construct()
@@ -10,12 +11,14 @@ class Hook{
         $this->remove_visuals();
 
         $this->assets_loader();
+
+        $this->shortcode();
     }
 
     public function scfn_cpt(){
 
         $scfn_cpt = new Simple_contact_admin();
-        
+
         add_action( 'init', [ $scfn_cpt, 'simple_contact_form_cpt'], 0 );
 
         add_filter('manage_simple_contact_form_posts_columns', [ $scfn_cpt, 'scf_add_custom_column']);
@@ -40,4 +43,9 @@ class Hook{
         add_action( 'admin_enqueue_scripts', [ 'simple_contact_form\Includes\Assets_loader', 'load_admin_scripts']);
     }
     
+
+    public function shortcode(){
+        $shortcode = new Simple_contact_shortcode();
+        add_shortcode('simple-contact-form', [ $shortcode, 'form_shortcode' ]);
+    }
 }
