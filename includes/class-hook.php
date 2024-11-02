@@ -30,12 +30,23 @@ class Hook{
 
     public function remove_visuals(){
         
-        global $pagenow;
-
-        // If current page is post.php and post isset than query for its post type 
-        if ( 'post.php' === $pagenow || 'post-new.php' === $pagenow && isset($_GET['post_type']) && 'simple_contact_form' == $_GET['post_type'] ){
-            add_filter( 'user_can_richedit' , '__return_false', 50 );
-        }
+        // function disable_richedit_for_simple_contact_form($can_edit) 
+        add_filter('user_can_richedit', function( $can_edit ){
+            
+                // Check if we are in the admin area
+                if (is_admin()) {
+                    // Get the current screen object
+                    $screen = get_current_screen();
+            
+                    // Check if the screen exists and if the post type is 'simple_contact_form'
+                    if ($screen && $screen->post_type === 'simple_contact_form') {
+                        return false; // Disable the rich editor
+                    }
+                }
+                return $can_edit; // Return the default behavior for other post types
+            
+        }, 50);
+        
 
     }
 
